@@ -229,5 +229,8 @@ class ImageWithThumbsField(ImageField):
         self.sizes = sizes
         super(ImageField, self).__init__(**kwargs)
 
-from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], ["^django_thumbs\.ImageWithThumbsField"])
+    def south_field_triple(self):
+        from south.modelsinspector import introspector
+        field_class = "django.db.models.fields.files.ImageField"
+        args, kwargs = introspector(self)
+        return (field_class, args, kwargs)
